@@ -7,8 +7,8 @@ fn main() {
     let mut ocean_floor_p2 = vec![vec![0; 1000]; 1000];
     let mut overlap = 0;
 
-    for pipe in pipes.into_iter() {
-        for coord in pipe.coords.into_iter() {
+    for pipe in pipes {
+        for coord in pipe.coords {
             if !pipe.diagonal {
                 ocean_floor_p1[coord.0 as usize][coord.1 as usize] += 1;
             }
@@ -16,8 +16,8 @@ fn main() {
         }
     }
 
-    for row in ocean_floor_p1.into_iter() {
-        for cell in row.into_iter() {
+    for row in ocean_floor_p1 {
+        for cell in row {
             if cell > 1 {
                 overlap += 1;
             }
@@ -28,8 +28,8 @@ fn main() {
 
     overlap = 0;
 
-    for row in ocean_floor_p2.into_iter() {
-        for cell in row.into_iter() {
+    for row in ocean_floor_p2 {
+        for cell in row {
             if cell > 1 {
                 overlap += 1;
             }

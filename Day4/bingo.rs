@@ -6,16 +6,16 @@ fn main() {
     let mut first_score = 0;
     let mut last_score = 0;
     
-    for rnd_num in numbers.iter() {
+    for rnd_num in numbers {
         for i in 0..boards.len() {
             if !boards[i].bingo {
-                boards[i].play_num(*rnd_num);
+                boards[i].play_num(rnd_num);
                 let won = boards[i].check_bingo();
                 if won {
                     if first_score == 0 {
-                        first_score = boards[i].score_board(*rnd_num);
+                        first_score = boards[i].score_board(rnd_num);
                     } else {
-                        last_score = boards[i].score_board(*rnd_num);
+                        last_score = boards[i].score_board(rnd_num);
                     }
                 }
             }
@@ -33,7 +33,6 @@ fn read_input() -> (Vec<u32>, Vec<Board>) {
     let rnd_numbers: Vec<u32> = lines.next().unwrap().split(",").map(|s| s.parse::<u32>().unwrap()).collect();
 
     let mut boards: Vec<Board> = Vec::new();
-
     let mut current_board : Vec<Vec<u32>> = Vec::new();
 
     for line in lines {
