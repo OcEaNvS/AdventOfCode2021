@@ -88,12 +88,3 @@ impl Pipe {
         }
     }
 }
-
-impl Default for Pipe {
-    fn default() -> Self {
-        Pipe {
-            coords: Vec::new(),
-            diagonal: false,
-        }
-    }
-}
