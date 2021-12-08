@@ -11,7 +11,8 @@ fn main() {
     }
 
     while day < 256 {
-        count_arr = populate_fishies(count_arr);
+        count_arr.rotate_left(1);
+        count_arr[6] += count_arr[8];
 
         if day == 79 {
             println!("Part 1 Fish Count: {}", count_arr.iter().sum::<usize>());
@@ -21,19 +22,4 @@ fn main() {
     }
 
     println!("Part 2 Fish Count: {}", count_arr.iter().sum::<usize>());
-}
-
-fn populate_fishies(fishies: Vec<usize>) -> Vec<usize> {
-    let mut new_fishies = vec![0; 9];
-    
-    for i in 0..=8 {
-        if i == 0 {
-            new_fishies[6] += fishies[i];
-            new_fishies[8] += fishies[i];
-        } else {
-            new_fishies[i - 1] += fishies[i];
-        }
-    }
-
-    new_fishies
 }
