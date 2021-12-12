@@ -121,10 +121,3 @@ struct Octopus {
     power: u32,
     flashed: bool,
 }
-
-impl fmt::Debug for Octopus {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.power)
-    }
-}
-
