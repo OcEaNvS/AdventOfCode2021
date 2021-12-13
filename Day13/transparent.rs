@@ -1,7 +1,7 @@
 fn main() {
     let (coordinates, fold) = include_str!("input.txt").split_once("\n\n").unwrap();
-    let fold = fold.lines().map(|line| line.trim_start_matches("fold along ")).map(|line| line.split_once("=").unwrap()).map(|(a, b)| (a, b.parse::<i32>().unwrap())).collect::<Vec<_>>();
-    let mut coordinates = coordinates.lines().map(|line| line.split_once(",").unwrap()).map(|(x, y)| (x.parse::<i32>().unwrap(), y.parse::<i32>().unwrap())).collect::<Vec<_>>();
+    let fold = fold.lines().map(|line| line.trim_start_matches("fold along ")).map(|line| line.split_once("=").unwrap()).map(|(a, b)| (a, b.parse::<i64>().unwrap())).collect::<Vec<_>>();
+    let mut coordinates = coordinates.lines().map(|line| line.split_once(",").unwrap()).map(|(x, y)| (x.parse::<i64>().unwrap(), y.parse::<i64>().unwrap())).collect::<Vec<_>>();
     let mut i = 1;
 
     println!("Part 1 Coordinates After Fold:");
@@ -14,16 +14,24 @@ fn main() {
                 "y" if y > value => Some((x, value - (y - value))),
                 _ => Some((x, y)),
             }
-        }).collect::<Vec<(i32, i32)>>();
+        }).collect::<Vec<(i64, i64)>>();
         coordinates.sort();
-        coordinates.dedup();
-
+        coordinates.dedup();        
         println!("Fold {:2}: {}", i, coordinates.len());
         i += 1;
     }
 
     let (max_x, max_y) = coordinates.iter().fold((0, 0), |(max_x, max_y), (x, y)| (max_x.max(*x), max_y.max(*y)));
-    let mut image = vec![vec![' '; max_x as usize + 1]; max_y as usize + 1];
+    let (min_x, min_y) = coordinates.iter().fold((0, 0), |(min_x, min_y), (x, y)| (min_x.min(*x), min_y.min(*y)));
+
+    if min_x < 0 {
+        coordinates = coordinates.into_iter().map(|(x, y)| (x - min_x, y)).collect::<Vec<_>>();
+    }
+    if min_y < 0 {
+        coordinates = coordinates.into_iter().map(|(x, y)| (x, y - min_y)).collect::<Vec<_>>();
+    }
+
+    let mut image = vec![vec![' '; (max_x - min_x) as usize + 1]; (max_y - min_y) as usize + 1];
     for (x, y) in coordinates {
         image[y as usize][x as usize] = '#';
     }
