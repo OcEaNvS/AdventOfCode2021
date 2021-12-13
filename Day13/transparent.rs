@@ -24,12 +24,7 @@ fn main() {
     let (max_x, max_y) = coordinates.iter().fold((0, 0), |(max_x, max_y), (x, y)| (max_x.max(*x), max_y.max(*y)));
     let (min_x, min_y) = coordinates.iter().fold((0, 0), |(min_x, min_y), (x, y)| (min_x.min(*x), min_y.min(*y)));
 
-    if min_x < 0 {
-        coordinates = coordinates.into_iter().map(|(x, y)| (x - min_x, y)).collect::<Vec<_>>();
-    }
-    if min_y < 0 {
-        coordinates = coordinates.into_iter().map(|(x, y)| (x, y - min_y)).collect::<Vec<_>>();
-    }
+    coordinates = coordinates.map(|(x, y)| (x - min_x, y - min_y)).collect::<Vec<_>>(); 
 
     let mut image = vec![vec![' '; (max_x - min_x) as usize + 1]; (max_y - min_y) as usize + 1];
     for (x, y) in coordinates {
